@@ -1,39 +1,48 @@
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 public class Main {
 
+    private static final int SUBJECT_COUNT = 20;
+
     public static void solution() throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        Map<String, Double> gradeMap = new HashMap<>();
+        gradeMap.put("A+", 4.5);
+        gradeMap.put("A0", 4.0);
+        gradeMap.put("B+", 3.5);
+        gradeMap.put("B0", 3.0);
+        gradeMap.put("C+", 2.5);
+        gradeMap.put("C0", 2.0);
+        gradeMap.put("D+", 1.5);
+        gradeMap.put("D0", 1.0);
+        gradeMap.put("F", 0.0);
+        gradeMap.put("P", 0.0);
 
-        String str[] = new String[20];
-        String gradeList[] = {"A+", "A0", "B+", "B0", "C+", "C0", "D+", "D0", "F", "P"};
-        double gradeScore[] = {4.5, 4.0, 3.5, 3.0, 2.5, 2.0, 1.5, 1.0, 0.0, 0.0};
+        double totalSum = 0.0; // 총 점수 (학점 * 성적)
+        double scoreSum = 0.0; // Pass 과목을 제외한 총 학점 합계
 
-        double totalSum = 0;
-        double scoreSum = 0;
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
+            for (int i = 0; i < SUBJECT_COUNT; i++) {
+                String line = br.readLine();
+                StringTokenizer st = new StringTokenizer(line, " ");
 
-        for (int i = 0; i < 20; i++) {
-            str[i] = br.readLine(); // 한 줄 입력 받고
-            StringTokenizer st = new StringTokenizer(str[i], " ");  // 공백을 기준으로 구분
-            String subject = st.nextToken(); // 과목명
-            double score = Double.parseDouble(st.nextToken()); // 학점
-            String grade = st.nextToken(); // 점수
+                String subject = st.nextToken(); // 과목명
+                double score = Double.parseDouble(st.nextToken()); // 학점
+                String grade = st.nextToken(); // 성적
 
-            for (int j = 0; j < 10; j++) {
-                if (grade.equals(gradeList[j])) {
-                    totalSum += score * gradeScore[j]; // 학점 * 점수
-                    if (j != 9) {   // Pass 과목 총 학점에서 제외
-                        scoreSum += score;  // 학점 누적 저장
-                    }
+                double gradeValue = gradeMap.get(grade);
+                totalSum += score * gradeValue;
+
+                if (!grade.equals("P")) {
+                    scoreSum += score; // 학점 누적
                 }
             }
         }
 
-        double average = totalSum/scoreSum;
+        double average = totalSum / scoreSum;
         System.out.printf("%.6f\n", average);
-        br.close();
-
     }
 
     public static void main(String[] args) throws IOException {
