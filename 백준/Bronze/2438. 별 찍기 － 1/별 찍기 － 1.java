@@ -8,10 +8,7 @@ public class Main {
             int t = Integer.parseInt(br.readLine());
 
             for (int i = 0; i < t; i++) {
-                for (int j = 0; j < i+1; j++) {
-                    System.out.print("*");
-                }
-                System.out.println();
+                System.out.println("*".repeat(i+1));
             }
         }
     }
