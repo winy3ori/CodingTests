@@ -18,14 +18,14 @@ public class Main {
                     result.add(cnt);
 
                     C -= cnt * change;
-                    C = Math.round(C * 100.0) / 100.0;
+                    C = Math.round(C * 100.0) / 100.0;  // 부동 소수점 방지
                 }
+                StringBuilder sb = new StringBuilder();
                 for (int r : result) {
-                    System.out.print(r + " ");
+                    sb.append(r).append(" ");
                 }
-                System.out.println();
+                System.out.println(sb.toString().trim());
             }
-
         }
     }
 }
